@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", "Poppins", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Poppins", sans-serif;
+}
+
+@layer base {
+  :root {
+    --bg-primary: #FDFCFB;
+    --bg-secondary: #FFFFFF;
+    --text-primary: #1A1A1A;
+    --text-secondary: #666666;
+    --accent: #3B82F6;
+    --border: #E5E7EB;
+    --card-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+  }
+
+  .dark {
+    --bg-primary: #0A0A0B;
+    --bg-secondary: #141416;
+    --text-primary: #F3F4F6;
+    --text-secondary: #9CA3AF;
+    --accent: #3B82F6;
+    --border: #262626;
+    --card-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.3);
+  }
+
+  body {
+    @apply bg-[var(--bg-primary)] text-[var(--bg-primary)] transition-colors duration-300;
+    font-family: var(--font-sans);
+  }
+}
+
+@layer components {
+  .premium-card {
+    @apply bg-[var(--bg-secondary)] border border-[var(--border)] rounded-2xl shadow-[var(--card-shadow)] transition-all duration-300;
+  }
+  
+  .input-field {
+    @apply w-full bg-[var(--bg-primary)] border border-[var(--border)] rounded-xl px-4 py-3 text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-zinc-300 dark:bg-zinc-800 rounded-full;
+}

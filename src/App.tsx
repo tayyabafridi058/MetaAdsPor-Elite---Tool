@@ -327,7 +327,16 @@ export default function App() {
     try {
       // Dynamic import to avoid fetch polyfill issues at load time
       const { GoogleGenAI } = await import("@google/genai");
-      const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+      
+      const apiKey = process.env.GEMINI_API_KEY;
+      
+      if (!apiKey || apiKey === 'MY_GEMINI_API_KEY' || apiKey.includes('YOUR_')) {
+        setError("API Key is missing. Please add GEMINI_API_KEY to your Vercel Environment Variables and redeploy.");
+        setLoading(false);
+        return;
+      }
+
+      const ai = new GoogleGenAI({ apiKey });
       
       // 1. Generate Text Content
       const textPrompt = `
@@ -420,9 +429,10 @@ export default function App() {
           }
         }
       }
-    } catch (err) {
-      console.error(err);
-      setError("Failed to generate premium ad pack. Please check your connection.");
+    } catch (err: any) {
+      console.error("Detailed API Error:", err);
+      const errorMessage = err.message || "Unknown connection error";
+      setError(`API Connection Error: ${errorMessage}. Please verify your API key in Vercel settings.`);
     } finally {
       setLoading(false);
     }
